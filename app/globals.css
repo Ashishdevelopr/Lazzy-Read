@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* === Theme Variables === */
+:root,
+[data-theme="light"] {
+  --bg: #ffffff;
+  --fg: #111827;
+  --surface: #f9fafb;
+  --accent: #6366f1;
+  --accent-fg: #ffffff;
+  --muted: #6b7280;
+  --border-color: #e5e7eb;
+  --card: #ffffff;
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  --highlight-yellow: rgba(253, 224, 71, 0.45);
+  --highlight-green: rgba(134, 239, 172, 0.45);
+  --highlight-blue: rgba(147, 197, 253, 0.45);
+  --highlight-pink: rgba(249, 168, 212, 0.45);
+}
+
+[data-theme="sepia"] {
+  --bg: #f5f0e8;
+  --fg: #3d2b1f;
+  --surface: #ede8df;
+  --accent: #b5651d;
+  --accent-fg: #ffffff;
+  --muted: #7c6352;
+  --border-color: #d5cbbe;
+  --card: #f5f0e8;
+  --card-shadow: 0 1px 3px 0 rgb(61 43 31 / 0.1);
+}
+
+[data-theme="dark"] {
+  --bg: #1f2937;
+  --fg: #f9fafb;
+  --surface: #111827;
+  --accent: #818cf8;
+  --accent-fg: #1e1b4b;
+  --muted: #9ca3af;
+  --border-color: #374151;
+  --card: #1f2937;
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+}
+
+[data-theme="night"] {
+  --bg: #0f0f0f;
+  --fg: #ff8c42;
+  --surface: #080808;
+  --accent: #ff8c42;
+  --accent-fg: #0f0f0f;
+  --muted: #a05c30;
+  --border-color: #2a1a0a;
+  --card: #1a0f00;
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.5);
+}
+
+/* === Base Styles === */
+html,
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Mobile viewport height fix */
+.full-height {
+  height: 100dvh;
+}
+
+@supports not (height: 100dvh) {
+  .full-height {
+    height: 100svh;
+  }
+}
+
+@supports not (height: 100svh) {
+  .full-height {
+    height: 100vh;
+  }
+}
+
+/* Reader full-screen */
+.reader-container {
+  width: 100%;
+  height: 100dvh;
+  background: var(--bg);
+  overflow: hidden;
+  position: relative;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Highlight overlay */
+.highlight-overlay {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  mix-blend-mode: multiply;
+  border-radius: 2px;
+}
+
+.highlight-overlay[data-color="yellow"] { background: var(--highlight-yellow); }
+.highlight-overlay[data-color="green"]  { background: var(--highlight-green); }
+.highlight-overlay[data-color="blue"]   { background: var(--highlight-blue); }
+.highlight-overlay[data-color="pink"]   { background: var(--highlight-pink); }
+
+/* Scrubber */
+.scrubber-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.scrubber-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.scrubber-thumb::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: 2px solid var(--bg);
+}
+
+/* Progress ring */
+.progress-ring circle {
+  transition: stroke-dashoffset 0.35s ease;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* Smooth page canvas */
+canvas {
+  display: block;
+}
+
+/* Goal celebration pulse */
+@keyframes celebrate {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.celebrate {
+  animation: celebrate 0.4s ease 2;
+}
+
+/* Calendar heatmap cell */
+.heatmap-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  animation: fadeIn 0.2s ease forwards;
+}
+
+/* Hide scrollbar but keep scroll */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+}
